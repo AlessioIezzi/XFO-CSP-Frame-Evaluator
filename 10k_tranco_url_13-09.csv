@@ -1,0 +1,13 @@
+url,status_code,policy_definition, inconsistency, which_policy,allow_from_inconsistency
+http://healthline.com,200,,,no_policy,
+http://varzesh3.com,200,,,no_policy,
+http://mapquest.com,200,,,no_policy,
+http://icloud-content.com,200,policy_inconsistent,multiple-header-comma_separated_policy,only_xfo,
+http://code.org,200,compatibility_oriented,,only_fa,
+http://xuite.net,200,policy_consistent,,fa_and_xfo,
+http://wtop.com,200,policy_consistent,,only_xfo,
+http://ntv.ru,200,compatibility_oriented,,only_fa,
+http://logi.com,200,policy_consistent,,only_xfo,
+http://hubblesite.org,200,,,no_policy,
+http://espacenet.com,200,,,no_policy,
+http://start.me,200,,,no_policy,

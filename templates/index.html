@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}policy analyzer{% endblock %}
+{% block content %}
+
+
+<div class="main-container">
+<div class="ribbon"></div>
+  <div class="content">
+    
+    <div class="main-content  ">
+      <div class="main-title"><h3>CSP and XFO Evaluator</h3></div>
+      <div class="section-title"><h4>Content Security Policy & X-Frame-Options</h4>  </div>
+        
+      <div class="form">
+        <form name="url-form" action='/' method="post">
+          <div class="textarea-form">
+            <input type="text" id="url" name="input_url" placeholder="Copy your url e.g. google.com">            
+          </div>
+          <button class="button btn" id="bottone"><b style="color: white;">CHECK</b></button>
+          <div class="textarea-result">
+            <textarea id="result" class="ace_scroller ace_content" name="text" rows="6"  wrap="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="CSP - XFO Result"></textarea>
+          </div>
+        </form>
+      </div>
+
+
+
+      <div class="result">
+
+        {% if error!='' %}
+        <div class="error">
+          {{error}}
+        </div>
+        {% endif %}
+        
+
+        {% if advices!=[] %}
+        <div class="messages">
+          {% for i in advices%}
+          <div class="directive">
+            <i class="material-icons red">error</i>{{i}}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+
+        
+
+
+        {% if information!=[] %}
+        <div class="messages">
+          {% for i in information%}
+          <div class="directive">
+            <i class="material-icons blue">info_outline</i>{{i}}
+          </div>
+          {% endfor %}
+          
+        </div>
+        {% endif %}
+
+
+        {% if ok_policy!=[] %}
+        <div class="messages">
+          {% for i in ok_policy%}
+          <div class="directive">
+            <i class="material-icons green">check</i>{{i}}
+          </div>
+          {% endfor %}
+          
+        </div>
+        {% endif %}
+
+        {% if not_found!=[] %}
+        <div class="messages">
+          {% for i in not_found%}
+          <div class="directive">
+            <i class="material-icons purple">clear</i>{{i}}
+          </div>
+          {% endfor %}
+          
+        </div>
+        {% endif %}
+
+
+        
+        
+        <div class="after">
+          {% if raw!='' %}
+            <div class="title"><h4>Policy suggested:</h4></div>
+          {% endif %}
+          {{xfo}}<br>
+          {{csp}}
+        </div>
+
+        
+
+      
+      <div class="legend">
+        <h4 class="legend-title legend-border" >Legend</h4> 
+        <div class="cols">
+          <div class="col icon">
+            <i class="material-icons green">check</i>All good
+          </div>
+          
+        </div>
+        <div class="cols">
+          <div class="col icon">
+            <i class="material-icons red">error</i> Severity finding       
+          </div>
+          
+        </div>
+        <div class="cols">
+          <div class="col icon">
+            <i class="material-icons blue">info_outline</i> Information       
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="cols">
+          <div class="col icon">
+            <i class="material-icons purple">clear</i>Not Found     
+          </div>
+          
+        </div>
+      
+
+      </div>
+    </div>
+    
+
+  </div>
+
+  
+  <script>    
+
+    function replaceAll(str, find, replace) {
+      return str.replace(new RegExp(find, 'g'), replace);
+    }
+
+    var a= '{{rawUrl}}'
+    console.log(a)
+    while(a.includes("&#39;")){
+      a=a.replace("&#39;","\'")
+    }
+    var policy=a.replace("&#39;","\'")
+    while(a.includes("&#34;")){
+      a=a.replace("&#34;","\"")
+    }
+    
+    document.getElementById('result').value=a
+  </script>
+
+</div>
+  <footer class="footer">
+    <div class="container">
+      <div class="row">              
+      </div>
+     
+      <div class="text-copyright">        
+        <p class=""><small class="text-white-50">© 2020. <a class="text-white-50" href='https://www.unive.it'>Università Ca’ Foscari</a></small></p>        
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+  var message_alert='{{alert}}'.toLowerCase();
+  if(message_alert=='true'){
+    alert("No CSP headers or XFO directives found for this domain!");
+    
+  }
+</script>
+{% endblock %}
+
+
+
